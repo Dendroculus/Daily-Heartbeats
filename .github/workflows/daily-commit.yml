@@ -1,0 +1,42 @@
+name: Daily Commit
+
+# small no-op comment to force re-registration: schedule registration fix
+on:
+  schedule:
+    - cron: '0 0 * * *'  
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run daily commit
+        env:
+          COMMIT_NAME: ${{ secrets.COMMIT_NAME }}
+          COMMIT_EMAIL: ${{ secrets.COMMIT_EMAIL }}
+        run: |
+          python daily_commit.py
+
+          NAME="${COMMIT_NAME:-${GITHUB_ACTOR}}"
+          EMAIL="${COMMIT_EMAIL:-${GITHUB_ACTOR}@users.noreply.github.com}"
+
+          git config user.name "$NAME"
+          git config user.email "$EMAIL"
+
+          git add log.txt
+          git commit -m "chore: heartbeat test $(date -u +'%Y-%m-%d %H:%M:%S')" || echo "No changes"
+          git push
