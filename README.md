@@ -1,50 +1,147 @@
 # 💓 Daily Heartbeats
 
-Automated daily commits that keep your GitHub contribution graph alive and consistent — powered by GitHub Actions and Python.
+[![Actions Status](https://github.com/Dendroculus/Daily-Heartbeats/actions/workflows/daily-commit.yml/badge.svg)](https://github.com/Dendroculus/Daily-Heartbeats/actions/workflows/daily-commit.yml) [![License: MIT](https://img.shields.io/github/license/Dendroculus/Daily-Heartbeats)](LICENSE)
 
-## ⚙️ Overview
+Automated, minimal, and reliable daily commits to keep your GitHub contribution graph active — powered by GitHub Actions and a tiny Python script.
 
-This repository runs a scheduled GitHub Actions workflow every 24 hours to append a timestamp entry to `log.txt`. Each commit acts as a "heartbeat," maintaining an active commit history and reflecting continuous project activity.
 
-## 🕒 Workflow Summary
 
-- **Trigger:** Runs daily at **00:00 UTC**
-- **Environment:** Ubuntu runner with **Python 3.x**
-- **Process:**
-  1. Executes `daily_commit.py`
-  2. Appends a new timestamp to `log.txt`
-  3. Commits and pushes the change automatically
+## 🧭 Overview
 
-## 📁 File Structure
+Daily Heartbeats appends a timestamp to `log.txt` once per day via a scheduled GitHub Actions workflow. Each commit acts as a "heartbeat" that preserves a steady, auditable commit history. The project is intentionally small and easy to adopt: copy as a template, adjust one or two settings, and you're done.
 
-| File | Description |
-|------|-------------|
-| `.github/workflows/daily-commit.yml` | Defines the automated workflow and schedule |
-| `daily_commit.py` | Generates a new timestamp entry |
-| `log.txt` | Stores all recorded heartbeat timestamps |
+Ideal uses:
+- Maintain an always-active contribution graph for demos or accounts you want to keep active.
+- Lightweight cron-like activity that’s visible in the repository history.
+- Educational example for GitHub Actions + simple automation.
 
-## 🚀 Usage
 
-To trigger the workflow manually:
-1. Navigate to the **Actions** tab in your repository.
-2. Select **Daily Commit** from the workflow list.
-3. Click **Run workflow** and choose the branch (usually `main`).
 
-A new heartbeat entry will be committed instantly when run manually, or automatically at the scheduled time.
+## ✨ Features
 
-## 🧾 Example Log Entry
+- Automated daily commits using GitHub Actions (cron + manual trigger).
+- Minimal Python script with no external dependencies.
+- Human-readable timestamp entries in `log.txt`.
+- Easy to customize schedule, commit message, and commit author.
+
+
+
+## 🚀 Quick setup
+
+1. Use this repository as a template: click **Use this template** and create a new repository.
+2. Enable Actions in your new repo: Settings → Actions → General → Allow all actions and reusable workflows → Save.
+3. (Optional) Provide a custom commit author:
+   - Settings → Secrets and variables → Actions → New repository secret
+   - Add `COMMIT_NAME` = "Your Name"
+   - Add `COMMIT_EMAIL` = "your-email@example.com"
+   If not provided, the workflow will use `GITHUB_ACTOR`.
+
+4. Test the workflow immediately:
+   - Go to the Actions tab → select "Daily Commit" → Run workflow → choose branch (usually `main`).
+
+That’s it — the workflow will run automatically on the schedule defined in the workflow file.
+
+
+
+## ⚙️ How it works
+
+1. The workflow triggers on a schedule (`on: schedule:`) and supports `workflow_dispatch` for manual runs.
+2. The runner checks out the repo and runs `daily_commit.py`.
+3. `daily_commit.py` appends the current UTC timestamp (and optional message) to `log.txt`.
+4. The workflow sets the git author (from secrets or `GITHUB_ACTOR`), commits, and pushes the change.
+
+
+
+## 📁 File structure
+
+- `.github/workflows/daily-commit.yml` — Scheduled workflow definition
+- `daily_commit.py` — Writes a timestamp entry to `log.txt`
+- `log.txt` — Stores the heartbeat timestamps
+
+Example tree:
+```
+.
+├── .github/workflows/daily-commit.yml
+├── daily_commit.py
+└── log.txt
+```
+
+
+
+## 🔧 Configuration & customization
+
+Change the schedule
+- Edit `.github/workflows/daily-commit.yml` and update the `cron` expression. GitHub Actions cron expressions use UTC.
+
+Example: run every day at midnight UTC
+```yaml
+on:
+  schedule:
+    - cron: '0 0 * * *' # 00:00 UTC daily
+  workflow_dispatch: {}
+```
+
+Change the commit message
+- Modify the commit step in the workflow, or update `daily_commit.py` to format entries as you prefer.
+
+Override commit author
+- Add repository secrets `COMMIT_NAME` and `COMMIT_EMAIL` to use a custom author for these commits.
+
+Run locally
+```bash
+python3 daily_commit.py
+```
+This appends one timestamp to `log.txt` in your local copy (useful for testing).
+
+Suggested commit message example (used by the workflow or script)
+```
+chore: heartbeat 2025-10-27 00:00:00 UTC
+```
+
+
+
+## 🛠️ Troubleshooting
+
+- Workflow does not appear in Actions tab:
+  - Ensure `.github/workflows/daily-commit.yml` is on the repository default branch (e.g., `main`).
+  - Confirm Actions are allowed in repository settings.
+
+- Scheduled runs not happening:
+  - Cron expressions are evaluated in UTC. Convert local times to UTC when editing the cron.
+  - Workflows are only scheduled for workflow files on the default branch.
+
+- Workflow shows no commit created:
+  - Check the Actions run logs for script errors.
+  - If `daily_commit.py` produced no change, the commit step should be resilient (common pattern: `git commit -m ... || echo "No changes"`).
+
+- Need more permissions (rare):
+  - The standard `GITHUB_TOKEN` is sufficient for commits. If you need broader permissions, create a PAT and store it as a secret — use carefully.
+
+
+
+## 📝 Example log entry
 
 ```
-2025-10-25 00:00:00 - Heartbeat executed successfully
+Daily heartbeat: 2025-10-27T00:57:51.172795+00:00
 ```
 
-## ⚙️ Customization
 
-- To change the schedule, edit `.github/workflows/daily-commit.yml` and update the `cron` expression under `on: schedule:`.
-- Cron times are interpreted in UTC by GitHub Actions.
-- Ensure the workflow file is on the repository's default branch (e.g., `main`) for scheduled runs to be registered.
+
+## 🤝 Contributing
+
+Contributions welcome — small, clear improvements are ideal here.
+
+Suggested workflow:
+1. Fork the repository.
+2. Create a topic branch (e.g., `feat/custom-format`).
+3. Make changes and test locally or via Actions.
+4. Open a pull request against `main` with a concise description.
+
+If you have ideas for features (e.g., configurable formats, timezones, or retention policies), open an issue first so we can discuss scope.
+
+
 
 ## 📜 License
 
-Licensed under the **MIT License**.  
-You are free to use, modify, and distribute this project for personal or educational purposes.
+MIT — see the LICENSE file for details.
+
