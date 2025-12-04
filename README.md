@@ -75,11 +75,11 @@ Example tree:
 Change the schedule
 - Edit `.github/workflows/daily-commit.yml` and update the `cron` expression. GitHub Actions cron expressions use UTC.
 
-Example: run every day at midnight UTC
+Example: run every day at midnight 00:00 UTC daily
 ```yaml
 on:
   schedule:
-    - cron: '0 0 * * *' # 00:00 UTC daily
+    - cron: '0 0 * * *' 
   workflow_dispatch: {}
 ```
 
