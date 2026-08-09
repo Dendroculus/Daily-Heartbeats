@@ -1,9 +1,9 @@
-[EN](https://github.com/Dendroculus/Daily-Heartbeats/blob/main/README.md) | CN
+[EN](https://github.com/Yoruxyv/Daily-Heartbeats/blob/main/README.md) | CN
 
 # 💓 每日心跳 (Daily Heartbeats)
 
-[![Actions Status](https://github.com/Dendroculus/Daily-Heartbeats/actions/workflows/daily-commit.yml/badge.svg)](https://github.com/Dendroculus/Daily-Heartbeats/actions/workflows/daily-commit.yml) 
-[![License: MIT](https://img.shields.io/github/license/Dendroculus/Daily-Heartbeats)](LICENSE)
+[![Actions Status](https://github.com/Yoruxyv/Daily-Heartbeats/actions/workflows/daily-commit.yml/badge.svg)](https://github.com/Yoruxyv/Daily-Heartbeats/actions/workflows/daily-commit.yml) 
+[![License: MIT](https://img.shields.io/github/license/Yoruxyv/Daily-Heartbeats)](LICENSE)
 
 一个自动、精简且可靠的每日提交工具，让你的 GitHub 贡献图保持常绿。由 GitHub Actions 和一个小型 Python 脚本驱动。
 

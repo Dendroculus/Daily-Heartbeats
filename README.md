@@ -1,8 +1,8 @@
-EN | [中文](https://github.com/Dendroculus/Daily-Heartbeats/blob/main/docs/readmeCN.md)
+EN | [中文](https://github.com/Yoruxyv/Daily-Heartbeats/blob/main/docs/readmeCN.md)
 
 # 💓 Daily Heartbeats
 
-[![Actions Status](https://github.com/Dendroculus/Daily-Heartbeats/actions/workflows/daily-commit.yml/badge.svg)](https://github.com/Dendroculus/Daily-Heartbeats/actions/workflows/daily-commit.yml) [![License: MIT](https://img.shields.io/github/license/Dendroculus/Daily-Heartbeats)](LICENSE)
+[![Actions Status](https://github.com/Yoruxyv/Daily-Heartbeats/actions/workflows/daily-commit.yml/badge.svg)](https://github.com/Yoruxyv/Daily-Heartbeats/actions/workflows/daily-commit.yml) [![License: MIT](https://img.shields.io/github/license/Yoruxyv/Daily-Heartbeats)](LICENSE)
 
 Automated, minimal, and reliable daily commits to keep your GitHub contribution graph active — powered by GitHub Actions and a tiny Python script.
 
